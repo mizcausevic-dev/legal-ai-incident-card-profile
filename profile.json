@@ -1,0 +1,118 @@
+{
+  "incident_card_profile_version": "0.1",
+  "profile_id": "legal-ai-incident-card-v0.1",
+  "title": "Legal AI Incident Card (LegalTech)",
+  "purpose": "Profile of the AI Incident Card spec scoped to legal-AI tools used by law firms, in-house legal departments, public defenders, and legal-AI vendors. Covers privilege breaches, work-product doctrine violations, conflict-check bypasses, court-sanctioned hallucinations (Mata v. Avianca-class), bar-discipline triggers, UPL violations, and engagement-letter-out-of-scope action. Provides the severity / event_type / bar-referral / outside-counsel-engagement taxonomy a law firm's General Counsel + Managing Partner + Chief Information Security Officer + state bar disciplinary counsel expects when an AI tool is implicated in a client-confidentiality, privilege-waiver, or court-sanction event. NOT a state-bar discipline outcome itself.",
+  "applies_to": [
+    "law-firm-with-licensed-attorneys",
+    "in-house-legal-department",
+    "public-defender-office",
+    "legal-ai-vendor-marketed-to-attorneys",
+    "matter-management-platform-with-ai-features",
+    "ediscovery-platform-with-ai-features",
+    "contract-lifecycle-management-with-ai-features",
+    "court-pretrial-services-using-ai"
+  ],
+  "event_type_taxonomy": [
+    {"code": "privileged-disclosure-to-unauthorized-recipient",     "description": "AI tool disclosed attorney-client-privileged content to a recipient outside the privilege circle. Common-law privilege waiver risk on the affected matter."},
+    {"code": "work-product-doctrine-violation",                      "description": "AI tool stored or disclosed attorney mental-impression / litigation-strategy material in a vendor-controlled context. Fed. R. Civ. P. 26(b)(3) doctrine waiver risk."},
+    {"code": "cross-matter-information-leak",                        "description": "Information from one matter leaked into AI context of another matter — same firm, different client. ABA Rule 1.6 + cross-matter firewall violation."},
+    {"code": "conflict-check-bypass",                                 "description": "Matter-data-touching AI operation occurred without a passed ABA Rule 1.7/1.9 conflict check. Engagement-letter binding bypassed."},
+    {"code": "engagement-letter-out-of-scope-action",                "description": "AI tool performed work outside the scope authorized by the engagement letter (e.g. cross-jurisdictional advice, practice-area outside engagement)."},
+    {"code": "court-sanctioned-hallucination-class",                  "description": "Mata v. Avianca-class incident — AI-fabricated case citations, statutes, or quotations reached a tribunal. ABA Rule 3.3 candor-toward-tribunal violation."},
+    {"code": "bar-discipline-trigger",                                "description": "Conduct triggered formal bar investigation, bar disciplinary counsel inquiry, or bar formal opinion request."},
+    {"code": "unauthorized-practice-of-law",                          "description": "AI tool gave legal advice directly to a non-client without attorney involvement, or to clients outside the attorney's licensed jurisdictions. ABA Rule 5.5 violation."},
+    {"code": "attorney-supervisor-bypass",                            "description": "AI tool produced production-ready output without supervising-attorney review. ABA Rule 5.3 violation."},
+    {"code": "client-deepfake-impersonation-attempt",                 "description": "AI deepfake (voice or document) used to impersonate a client to an attorney, or vice versa, was attempted (whether or not successful)."},
+    {"code": "ai-vendor-training-data-use-violation",                "description": "AI vendor used client matter data to train models, in violation of vendor contract clauses + ABA Rule 1.6 confidentiality."},
+    {"code": "privilege-log-incomplete-due-to-ai-tagging",            "description": "AI-mediated privilege log is materially incomplete or systematically misclassifies documents. Discovery cooperation + Fed. R. Civ. P. 26 sanctions risk."},
+    {"code": "ediscovery-tar-coding-error-systematic",                "description": "AI-driven Technology Assisted Review (predictive coding) systematic accuracy failure on a discovery production."},
+    {"code": "ediscovery-spoliation-by-ai-retention-policy",          "description": "AI tool retention policy caused spoliation of discoverable material. Fed. R. Civ. P. 37(e) sanctions risk."},
+    {"code": "bar-association-investigation-opened",                  "description": "Formal bar association investigation opened referencing the AI tool's role."},
+    {"code": "court-standing-order-violation",                        "description": "Filing violated a court's AI-disclosure standing order (post-Mata v. Avianca era — SDNY-style + analogues)."},
+    {"code": "billing-misconduct-ai-time-fraud",                      "description": "AI-augmented work billed at full attorney rate without disclosure to client. Rule 1.5 + state bar fee-rule violation."},
+    {"code": "cross-border-data-residency-violation",                 "description": "Client data was processed by AI infrastructure outside the engagement-letter-disclosed jurisdictions."}
+  ],
+  "severity_scale": [
+    {"code": "S1-low",       "description": "Single-matter, internally remediated within 7 days; no privilege waiver; no tribunal involvement; no bar inquiry. Internal log + supervising-attorney sign-off."},
+    {"code": "S2-moderate",  "description": "Single-matter material confidentiality / scope incident OR cross-matter pattern affecting ≤3 matters OR client notification triggered. Managing Partner notification REQUIRED."},
+    {"code": "S3-serious",   "description": "Privilege-waiver risk realized OR court-disclosure required OR work-product-doctrine challenge OR formal bar inquiry opened OR pattern affecting >3 matters OR Rule 1.5 billing-fraud allegation. Outside ethics counsel engagement + bar disciplinary counsel notification REQUIRED."},
+    {"code": "S4-critical",  "description": "Court sanction (Mata v. Avianca-class) OR active bar disciplinary action OR class-action-style filing referencing the AI tool OR cross-firm pattern OR criminal-defense Sixth-Amendment-effective-assistance allegation. Multi-jurisdiction bar referral + general-counsel + insurer-malpractice notification REQUIRED."}
+  ],
+  "regulator_referral_pathways": [
+    {"code": "managing-partner-notification",            "trigger": "S2-moderate or higher",                                              "destination": "Firm Managing Partner + Firm General Counsel"},
+    {"code": "client-notification",                       "trigger": "Any privileged-disclosure-to-unauthorized-recipient OR work-product-doctrine-violation OR ai-vendor-training-data-use-violation event", "destination": "Affected client(s) — under ABA Rule 1.4 communication obligation"},
+    {"code": "outside-ethics-counsel-engagement",         "trigger": "S3-serious or higher",                                               "destination": "Outside ethics counsel (separate from the engagement)"},
+    {"code": "state-bar-disciplinary-counsel-notification","trigger": "S3-serious or higher OR bar-discipline-trigger event type",          "destination": "State bar(s) of licensure for the supervising attorney(s)"},
+    {"code": "court-disclosure",                           "trigger": "court-sanctioned-hallucination-class OR court-standing-order-violation event type", "destination": "Affected tribunal (court of filing)"},
+    {"code": "professional-liability-insurer-notification","trigger": "S3-serious or higher",                                               "destination": "Firm's professional-liability / malpractice insurer"},
+    {"code": "ai-vendor-incident-coordination",           "trigger": "ai-vendor-training-data-use-violation event type OR S3-serious or higher", "destination": "AI vendor's customer-incident channel"},
+    {"code": "criminal-defense-effective-assistance-disclosure", "trigger": "Affected matter is criminal defense AND S2-moderate or higher", "destination": "Defendant + appellate counsel (if any) — Sixth Amendment effective-assistance obligation"},
+    {"code": "doj-civil-rights-referral",                 "trigger": "Affected matter involves discriminatory pattern under Title VI/VII", "destination": "DOJ Civil Rights Division"},
+    {"code": "interpol-cross-border-data-coordination",   "trigger": "cross-border-data-residency-violation event type",                   "destination": "Affected client + foreign data protection authority"}
+  ],
+  "required_fields": [
+    "incident_card_version",
+    "incident_id",
+    "discovered_at",
+    "reported_at",
+    "event_type",
+    "severity",
+    "affected_ai_system",
+    "affected_decision_card_ref",
+    "affected_matter_count_estimate",
+    "affected_client_count_estimate",
+    "privilege_waiver_risk_assessment",
+    "supervising_attorney_bar_id_tokenized",
+    "supervising_attorney_jurisdiction",
+    "regulator_referral_evaluation",
+    "remediation_plan",
+    "signed_by_key_uri"
+  ],
+  "recommended_fields": [
+    "linked_audit_stream_event_ids",
+    "linked_bias_coverage_bundle_id",
+    "linked_aba_rule_1_6_readiness_bundle_id",
+    "outside_ethics_counsel_engagement",
+    "managing-partner-review-date",
+    "general-counsel-review-date",
+    "malpractice-insurer-claim-number",
+    "tribunal-disclosure-date",
+    "client-notification-date",
+    "bar-association-notification-date"
+  ],
+  "privilege_waiver_risk_taxonomy": [
+    {"code": "no-privilege-risk-applicable",            "description": "Matter involved public-record or pre-engagement work"},
+    {"code": "no-disclosure-occurred",                   "description": "Incident contained internally; no extra-circle disclosure"},
+    {"code": "low-vendor-channel-only",                  "description": "Disclosure limited to AI vendor channel governed by no-training contract clause"},
+    {"code": "moderate-third-party-but-recoverable",     "description": "Disclosure to non-privileged party but situation supports clawback under Fed. R. Evid. 502(d)"},
+    {"code": "high-waiver-likely",                       "description": "Disclosure was material; waiver is the more likely-than-not outcome on the affected matter"},
+    {"code": "critical-cross-matter-or-subject-matter",  "description": "Waiver implicates the subject-matter doctrine — potential waiver across multiple related matters"}
+  ],
+  "audit_stream_emission_conventions": {
+    "incident_filed_event_kind":             "legaltech_ai_incident.filed",
+    "incident_remediated_event_kind":         "legaltech_ai_incident.remediated",
+    "regulator_referral_event_kind":          "legaltech_ai_incident.regulator_referred",
+    "court_disclosure_event_kind":            "legaltech_ai_incident.court_disclosed",
+    "client_notification_event_kind":         "legaltech_ai_incident.client_notified"
+  },
+  "signature": {
+    "required": true,
+    "algorithm": "ed25519",
+    "rationale": "Incident Cards reach state bar disciplinary counsel, outside ethics counsel, and tribunals. Signature establishes the card was issued by the attesting attorney and not retroactively altered."
+  },
+  "non_obligations_explicitly": [
+    "This Incident Card is NOT a bar discipline outcome — it documents an incident; the bar's separate process determines discipline.",
+    "This Incident Card is NOT a malpractice waiver — filing it does not waive any defenses the firm may have.",
+    "This Incident Card does NOT itself waive privilege over its contents (filing should be done with privilege-preservation review)."
+  ],
+  "related": {
+    "kg_protocol_suite_url": "https://suite.kineticgain.com",
+    "incident_card_spec":  "https://github.com/mizcausevic-dev/incident-card-spec",
+    "sibling_operator_audit_stream": "https://github.com/mizcausevic-dev/matter-decision-record-audit-stream",
+    "sibling_compliance_evidence_bundle": "https://github.com/mizcausevic-dev/aba-rule-1-6-readiness-evidence-bundle",
+    "sibling_bias_coverage_lab":          "https://github.com/mizcausevic-dev/legal-applicant-bias-coverage-lab",
+    "sibling_state_bar_tracker":          "https://github.com/mizcausevic-dev/state-bar-ai-disclosure-tracker",
+    "sibling_vault_contract":             "https://github.com/mizcausevic-dev/attorney-client-data-vault-contract-profile"
+  }
+}
